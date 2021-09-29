@@ -2,7 +2,6 @@ package parkinglot;
 
 /**
  * Purpose - To simulate a Parking Lot System
- *
  * @author - Sakshi Shetty
  * @version - 8.0
  * @since - 2021-09-29
