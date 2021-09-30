@@ -11,24 +11,29 @@ public class ParkingLotSystem {
     private Object vehicle;
 
     public void park(Object vehicle) throws ParkingLotException {
-        if (this.vehicle == null) {
+        if (this.vehicle == null)
             this.vehicle = vehicle;
-           throw new ParkingLotException("Parking Lot is full");
-        }
+        else if (this.vehicle.equals(vehicle))
+            throw new ParkingLotException("Vehicle is already Parked");
     }
 
     public boolean isVehicleParked(Object vehicle) {
-        if (this.vehicle.equals(vehicle))
-            return true;
-        return false;
+        return this.vehicle.equals(vehicle);
     }
 
-    public boolean unPark(Object vehicle) {
-        if (this.vehicle.equals(vehicle)) {
+    public void unPark(Object vehicle) throws ParkingLotException {
+        if (this.vehicle == null)
+            throw new ParkingLotException("There is no Vehicle Parked to Unpark");
+        else if (this.vehicle.equals(vehicle))
             this.vehicle = null;
-            return true;
-        }
-        return false;
     }
 
+    public boolean isUnParked() {
+        return this.vehicle == null;
+    }
+
+    public boolean isParkingLotFull() {
+        return this.vehicle != null;
+    }
 }
+
