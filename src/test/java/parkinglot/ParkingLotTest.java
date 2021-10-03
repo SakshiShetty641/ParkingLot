@@ -90,13 +90,13 @@ public class ParkingLotTest {
             if (parkingLotSystem.isParkingLotFull()) {
                 throw new ParkingLotSignal("The Parking Lot is Full");
             }
-        } catch (ParkingLotSignal e){
-            Assertions.assertEquals("The Parking Lot is Full",e.getMessage());
+        } catch (ParkingLotSignal e) {
+            Assertions.assertEquals("The Parking Lot is Full", e.getMessage());
         }
     }
 
     @Test
-    public void givenWhenParkingLotIsFull_ShouldInformTheOwner(){
+    public void givenWhenParkingLotIsFull_ShouldInformTheOwner() {
         ParkingLotOwner owner = new ParkingLotOwner();
         parkingLotSystem.registerOwner(owner);
         try {
@@ -106,6 +106,21 @@ public class ParkingLotTest {
             e.printStackTrace();
             boolean capacityFull = owner.isCapacityFull();
             Assertions.assertTrue(capacityFull);
+        }
+    }
+
+    @Test
+    public void givenCapacityIs2_ShouldBeAbleToPark2Vehicles() {
+        Object vehicle2 = new Object();
+        parkingLotSystem.setCapacity(2);
+        try {
+            parkingLotSystem.park(vehicle);
+            parkingLotSystem.park(vehicle2);
+            boolean isParked1 = parkingLotSystem.isVehicleParked(vehicle2);
+            boolean isParked2 = parkingLotSystem.isVehicleParked(vehicle2);
+            Assertions.assertTrue(isParked1 && isParked2);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
         }
     }
 }
