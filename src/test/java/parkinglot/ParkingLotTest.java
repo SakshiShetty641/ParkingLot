@@ -136,4 +136,19 @@ public class ParkingLotTest {
             Assertions.assertTrue(capacityFull);
         }
     }
+
+    @Test
+    public void givenWhenParkingLotSpaceIsAvailableAfterFull_ShouldReturnTrue() throws ParkingLotException {
+        Object vehicle2 = new Object();
+        ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.registerParkingLotObserver(owner);
+        try {
+            parkingLotSystem.park(vehicle);
+            parkingLotSystem.park(vehicle2);
+        } catch (ParkingLotException e) {
+            parkingLotSystem.unPark(vehicle);
+            boolean capacityFull = owner.isCapacityFull();
+            Assertions.assertFalse(capacityFull);
+        }
+    }
 }
