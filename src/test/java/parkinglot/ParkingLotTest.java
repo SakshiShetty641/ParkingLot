@@ -11,7 +11,7 @@ public class ParkingLotTest {
     @BeforeEach
     public void setUp() throws Exception {
         vehicle = new Object();
-        parkingLotSystem = new ParkingLotSystem();
+        parkingLotSystem = new ParkingLotSystem(1);
     }
 
     @Test
@@ -50,9 +50,8 @@ public class ParkingLotTest {
     public void givenAVehicle_WhenAlreadyParked_ShouldReturnFalse() {
         try {
             parkingLotSystem.park(vehicle);
-            parkingLotSystem.park(new Object());
         } catch (ParkingLotException e) {
-            Assertions.assertEquals("Parking Lot is full", e.getMessage());
+            Assertions.assertEquals("Vehicle is already Parked", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -93,6 +92,20 @@ public class ParkingLotTest {
             }
         } catch (ParkingLotSignal e){
             Assertions.assertEquals("The Parking Lot is Full",e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenWhenParkingLotIsFull_ShouldInformTheOwner(){
+        ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.registerOwner(owner);
+        try {
+            parkingLotSystem.park(vehicle);
+            parkingLotSystem.park(new Object());
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+            boolean capacityFull = owner.isCapacityFull();
+            Assertions.assertTrue(capacityFull);
         }
     }
 }
