@@ -1,6 +1,7 @@
 package parkinglot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,12 +16,25 @@ public class ParkingLotSystem {
     private final List vehicles;
     private List<ParkingLotObserver> observers;
     private Object vehicle;
+    private int[] parkingSlots;
 
     public ParkingLotSystem(int capacity) {
+        this.parkingSlots = new int[100];
+        Arrays.fill(parkingSlots, 0);
         this.observers = new ArrayList<>();
         this.vehicles = new ArrayList();
         this.actualCapacity = capacity;
     }
+
+    public int getAvailableParkingSlots() throws ParkingLotException {
+        for (int parkingSlot : parkingSlots) {
+            if (parkingSlot == 0) {
+                return parkingSlot;
+            }
+        }
+        throw new ParkingLotException("Parking Lot is Full");
+    }
+
 
     public void registerParkingLotObserver(ParkingLotObserver observer) {
         this.observers.add(observer);
